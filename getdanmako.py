@@ -3,7 +3,6 @@ Author: Komoriii
 email: c2VuZXZhbkBmb3htYWlsLmNvbQ==
 '''
 import requests
-import random
 from bs4 import BeautifulSoup
 
 
@@ -25,7 +24,7 @@ class Danmaku_pool():
         print(self.pool)
     
     def save_to_txt(self, filename):
-        f = open(filename, 'w')
+        f = open(filename, 'w', encoding='utf-8')
         for i in self.pool:
             for line in i:
                 # change to utf encoding, otherwise this cause an error
@@ -40,10 +39,7 @@ def read_lines(filename):
         list_temp.append(line)
     return list_temp
 
-def get_danmaku1v(user_agent, cid):
-    headers = {
-        'User-Agent': user_agent,
-    }
+def get_danmaku1v(cid):
     r = requests.get(DANMAKU_API.format(cid))
     raw_file = r.content
     danmaku_1v = []
@@ -55,12 +51,10 @@ def get_danmaku1v(user_agent, cid):
 
 def main():
     danmaku_pool = Danmaku_pool()
-    UA_list = read_lines('UAs.txt')
-    user_agent = UA_list[random.randrange(len(UA_list))]
     cids = set(read_lines('cids.txt'))
     for c in cids:
-        danmaku_pool.append_dm(get_danmaku1v(user_agent, c))
-    #danmaku_pool.save_to_txt('danmaku_sv.txt')
+        danmaku_pool.append_dm(get_danmaku1v(c))
+    danmaku_pool.save_to_txt('data/danmaku_sv.txt')
 
 if __name__ == '__main__':
     main()
