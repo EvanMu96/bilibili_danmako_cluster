@@ -11,27 +11,27 @@ DANMAKU_API = "https://comment.bilibili.com/{0}.xml"
 UA_list = []
 cids = {}
 danmaku_list = []
-random.seed()
 
 class Danmaku_pool():
     def __init__(self):
         self.pool = []
     
+    # append danmaku list to danmaku pool
     def append_dm(self, dm_list):
         self.pool.append(dm_list)
 
+    # print danmaku pool
     def print(self):
         print(self.pool)
     
+    #save danmaku pool to file
     def save_to_txt(self, filename):
         f = open(filename, 'w', encoding='utf-8')
-        for i in self.pool:
-            for line in i:
-                # change to utf encoding, otherwise this cause an error
-                f.writelines(line)
+        for line in self.pool:
+            f.write('\n'.join(line))
         f.close()
 
-# read all of the User-Agents
+# read files by line
 def read_lines(filename):
     list_temp = []
     f = open(filename, 'r')
