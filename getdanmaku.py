@@ -2,6 +2,7 @@
 Author: Komoriii
 email: c2VuZXZhbkBmb3htYWlsLmNvbQ==
 '''
+from punctuation_filter import *
 import requests
 from bs4 import BeautifulSoup
 
@@ -45,7 +46,10 @@ def get_danmaku1v(cid):
     danmaku_1v = []
     formated_file = BeautifulSoup(raw_file, "lxml")
     for dm in formated_file.find_all('d'):
-        danmaku_1v.append(dm.get_text())
+        text = filter_punc(dm.get_text())
+        if text == '':
+            continue
+        danmaku_1v.append(text)
     return danmaku_1v
 
 
