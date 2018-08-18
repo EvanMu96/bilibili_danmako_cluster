@@ -1,6 +1,6 @@
 '''
-Author: Komoriii
-email: c2VuZXZhbkBmb3htYWlsLmNvbQ==
+@Author: Komoriii
+@email: c2VuZXZhbkBmb3htYWlsLmNvbQ==
 '''
 from punctuation_filter import *
 import requests
@@ -29,7 +29,7 @@ class Danmaku_pool():
     def save_to_txt(self, filename):
         f = open(filename, 'w', encoding='utf-8')
         for line in self.pool:
-            f.write('\n'.join(line))
+            f.write('\n'.join(line, 'str'))
         f.close()
 
 # read files by line
@@ -58,6 +58,7 @@ def main():
     cids = set(read_lines('cids.txt'))
     for c in cids:
         danmaku_pool.append_dm(get_danmaku1v(c))
+    # save to file
     danmaku_pool.save_to_txt('data/danmaku_sv.txt')
 
 if __name__ == '__main__':
